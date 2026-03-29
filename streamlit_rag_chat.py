@@ -4,7 +4,13 @@ import os
 from typing import List, Tuple
 
 import streamlit as st
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ModuleNotFoundError:
+    # Allow app startup in environments where python-dotenv is not installed.
+    def load_dotenv(*args, **kwargs):
+        return False
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
